@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Anderson Alves</title>
+
+  <!-- Fontes do Google: Instrument Serif (títulos) e Inter (textos) -->
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="an-icon.png">
+
+  <!-- Arquivo com todo o visual do site -->
+  <link rel="stylesheet" href="estilo.css">
+</head>
+
+<!--
+  COMO ADICIONAR UMA SEÇÃO NOVA:
+  1) Copie uma <section> daqui e troque o id (ex.: id="parcerias") e o data-aba.
+  2) Estilize ela no estilo.css (procure o comentário "SEÇÕES EM GERAL").
+  3) Coloque um link novo no <nav class="menu-inferior"> lá embaixo.
+  Para mudar projetos, serviços ou depoimentos, edite as listas no começo do script.js.
+-->
+<body>
+
+  <!-- Link escondido para quem usa teclado pular direto para o conteúdo -->
+  <a class="link-pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- ========== TOPO: logo, foto de perfil e botão de tema ========== -->
+  <header class="topo">
+    <div class="logo">
+      <!-- A foto de perfil é colocada no script.js (variável FOTO_PERFIL). Enquanto não tem foto, aparece "LA" -->
+      <div class="foto-perfil" id="fotoPerfil" role="img" aria-label="Foto de perfil de Lucas Andrade">
+        <span aria-hidden="true">LA</span>
+      </div>
+      <span>Anderson Alves<sup>©</sup></span>
+    </div>
+
+    <!-- Botão que troca entre modo claro e escuro (lua = claro, sol = escuro) -->
+    <button class="botao-tema" id="botaoTema" aria-label="Ativar modo escuro" aria-pressed="false">
+      <svg class="icone-lua" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      <svg class="icone-sol" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- ========== SEÇÃO INÍCIO: título, botões e a cena 3D ========== -->
+    <section class="secao-inicio" id="inicio" data-aba="inicio">
+      <h1 class="titulo-principal">Sites e apps. <em>Sua marca merece uma presença digital.</em></h1>
+      <p class="texto-apresentacao">Sou desenvolvedor e crio sites e aplicativos rápidos e bonitos, do primeiro rascunho ao lançamento.</p>
+
+      <div class="botoes-inicio">
+        <a class="botao botao-principal" href="#contato">Vamos começar?</a>
+        <a class="botao" href="#projetos">Veja meu trabalho</a>
+      </div>
+
+      <!-- Palco 3D: o JavaScript inclina a "cena" quando o mouse/dedo passa por cima -->
+      <div class="palco" id="palco" role="group" aria-label="Ilustração interativa dos serviços">
+        <div class="cena" id="cena">
+          <div class="anel"></div>
+
+          <!-- Esfera colorida do centro. O desenho abaixo (silhueta) é o padrão. -->
+          <!-- Para usar a sua imagem NÃO mexa aqui: preencha IMAGEM_CENTRAL no começo do script.js -->
+          <div class="esfera" id="esfera" aria-hidden="true">
+            <svg id="silhuetaPadrao" viewBox="0 0 250 170" fill="none"><ellipse cx="125" cy="62" rx="40" ry="46" fill="#2a2833" opacity=".85"/><path d="M0 170c8-60 52-76 125-76s117 16 125 76z" fill="#2a2833"/></svg>
+          </div>
+
+          <!-- Cartões que flutuam em volta. data-destino = seção para onde o clique leva -->
+          <button class="cartao-flutuante flutuante-sites" data-destino="#servicos">
+            <i aria-hidden="true">◐</i><span><b>Sites</b>Rápidos</span>
+          </button>
+          <button class="cartao-flutuante flutuante-apps" data-destino="#projetos">
+            <i aria-hidden="true">▣</i><span><b>Apps</b>iOS e Android</span>
+          </button>
+          <button class="cartao-flutuante flutuante-sistemas" data-destino="#servicos">
+            <i aria-hidden="true">⌘</i><span><b>Sistemas</b>Painéis</span>
+          </button>
+          <button class="cartao-flutuante flutuante-design" data-destino="#sobre">
+            <i aria-hidden="true">✦</i><span><b>Design</b>Interfaces</span>
+          </button>
+
+          <!-- Selo de texto que fica girando -->
+          <div class="selo-giratorio" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <defs><path id="caminhoSelo" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs>
+              <text font-size="9" textLength="284" lengthAdjust="spacing"><textPath href="#caminhoSelo">DISPONÍVEL PARA NOVOS PROJETOS ✦ </textPath></text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO PROJETOS ========== -->
+    <section id="projetos" data-aba="projetos">
+      <h2 class="titulo-secao">Trabalhos recentes</h2>
+      <p class="subtitulo">Um site ajuda o seu negócio a ser visto com bons olhos. Veja o que já criei.</p>
+
+      <!-- Os cartões são criados pelo script.js a partir da lista "listaProjetos" -->
+      <div class="grade-projetos" id="listaProjetos"></div>
+    </section>
+
+    <!-- ========== SEÇÃO SERVIÇOS ========== -->
+    <section id="servicos" data-aba="servicos">
+      <h2 class="titulo-secao">O que eu faço</h2>
+      <p class="subtitulo">Do site ao aplicativo completo, com código limpo e foco em resultado.</p>
+
+      <!-- Os cartões são criados pelo script.js a partir da lista "listaServicos" -->
+      <div class="grade-servicos" id="listaServicos"></div>
+
+      <!-- Tecnologias que eu uso (para adicionar uma, copie uma linha de <span>) -->
+      <div class="lista-tecnologias" aria-label="Tecnologias">
+        <span class="etiqueta">JavaScript</span>
+        <span class="etiqueta">CSS</span>
+        <span class="etiqueta">HTML</span>
+        <span class="etiqueta">C#</span>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO SOBRE: texto + números ========== -->
+    <section id="sobre" data-aba="sobre">
+      <h2 class="titulo-secao">Código com cuidado, entrega no prazo.</h2>
+      <p>Há mais de 5 anos ajudo negócios a colocar boas ideias na internet.</p>
+      <p>Converso com você a cada etapa, mostro todo o progresso e entrego um projeto fácil de manter.</p>
+
+      <!-- Os números contam de 0 até o valor quando aparecem na tela -->
+      <div class="numeros">
+        <div class="cartao cartao-numero"><strong class="numero-valor">5+</strong><span>anos de experiência</span></div>
+        <!--<div class="cartao cartao-numero"><strong class="numero-valor">20+</strong><span>projetos entregues</span></div>-->
+        <div class="cartao cartao-numero"><strong class="numero-valor">100%</strong><span>sites responsivos</span></div>
+        <div class="cartao cartao-numero"><strong class="numero-valor">24h</strong><span>para responder</span></div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO DEPOIMENTOS ========== -->
+    <!-- data-aba="sobre" faz o menu de baixo marcar "Sobre" enquanto esta seção está na tela -->
+    <section id="depoimentos" data-aba="sobre">
+      <h2 class="titulo-secao">Quem já trabalhou comigo</h2>
+      <!<p class="subtitulo">-</p>
+
+      <div class="depoimentos">
+        <!-- Coluna da esquerda: só as fotos dos clientes (criadas pelo script.js) -->
+        <div class="lista-clientes" id="listaClientes" role="tablist" aria-label="Clientes" aria-orientation="vertical"></div>
+
+        <!-- Coluna da direita: o comentário do cliente escolhido -->
+        <div class="cartao cartao-depoimento" id="cartaoDepoimento" role="tabpanel">
+          <div class="estrelas" role="img" aria-label="5 de 5 estrelas">★★★★★</div>
+          <blockquote id="textoDepoimento"></blockquote>
+          <cite class="autor-depoimento" id="autorDepoimento"></cite>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SEÇÃO CONTATO ========== -->
+    <section id="contato" data-aba="contato">
+      <div class="cartao-contato">
+        <h2 class="titulo-secao">Tem uma ideia? Vamos construir.</h2>
+        <p>Conte o que você precisa!</p>
+
+        <a class="botao-email" href="https://wa.me/5583933002630?text=Oi,%20Anderson!%20Gostei%20do%20seu%20trabalho%20e%20queria%20conversar%20sobre%20um%20projeto.">
+          <!--<svg class="icone-email" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg> -->
+         Vamos conversar? 
+        </a>
+        <div class="endereco-email">eusou.andersonalves@gmail.com</div>
+
+        <!-- Redes sociais. --cor-rede = cor da marca no hover/clique/foco; --fundo-rede = fundo especial (opcional) -->
+        <!-- Troque os href="#" pelos links dos seus perfis -->
+        <div class="redes-sociais">
+          <a href="https://www.instagram.com/eusou.andersonalves/" aria-label="Instagram" style="--cor-rede:#E4405F; --fundo-rede:linear-gradient(45deg,#f9a03f,#d62976 50%,#6a3df0)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6A3.6 3.6 0 0 0 16.4 4H7.6zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.2-3.2a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+          </a>
+          <!--<a href="#" aria-label="LinkedIn" style="--cor-rede:#0A66C2">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6V21h-4v-5.1c0-1.2 0-2.8-1.7-2.8-1.8 0-2 1.4-2 2.7V21h-4z"/></svg>
+          </a> -->
+          <a href="https://github.com/euandersonalves" aria-label="GitHub" style="--cor-rede:#8b949e; --fundo-rede:#2b3137">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.3-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+          </a>
+          <a href="https://wa.me/5583933002630?text=Oi,%20Anderson!%20Gostei%20do%20seu%20trabalho%20e%20queria%20conversar%20sobre%20um%20projeto." aria-label="WhatsApp" style="--cor-rede:#25D366">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.7 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.5-.3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <footer class="rodape">© 2026 Anderson Alves</footer>
+    </section>
+  </main>
+
+  <!-- ========== MENU DE NAVEGAÇÃO ========== -->
+  <!-- No celular fica embaixo (ícone + nome). No computador vai para o topo (só o nome) -->
+  <!-- data-aba precisa ser igual ao data-aba da seção para o menu marcar a aba certa -->
+  <nav class="menu-inferior" id="menu" aria-label="Navegação principal">
+    <a href="#inicio" data-aba="inicio">
+      <span class="icone-menu"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg></span>Início
+    </a>
+    <a href="#projetos" data-aba="projetos">
+      <span class="icone-menu"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>Projetos
+    </a>
+    <a href="#servicos" data-aba="servicos">
+      <span class="icone-menu"><svg viewBox="0 0 24 24"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/></svg></span>Serviços
+    </a>
+    <a href="#sobre" data-aba="sobre">
+      <span class="icone-menu"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg></span>Sobre
+    </a>
+    <a href="#contato" data-aba="contato">
+      <span class="icone-menu"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/></svg></span>Contato
+    </a>
+  </nav>
+
+  <!-- Arquivo com toda a parte interativa do site -->
+  <script src="script.js"></script>
+</body>
+</html>

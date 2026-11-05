@@ -1,0 +1,350 @@
+/* =====================================================================
+   ESTILO DO SITE — Lucas Andrade
+   Ordem do arquivo: 1 variáveis · 2 base · 3 topo · 4 botões · 5 início
+   6 seções em geral · 7 cartões que abrem · 8 projetos · 9 serviços
+   10 sobre · 11 depoimentos · 12 contato · 13 menu · 14 efeitos de mouse
+   15 versão computador · 16 acessibilidade (reduzir animações)
+   ===================================================================== */
+
+/* ---------- 1. VARIÁVEIS: para mudar uma cor do site inteiro, mude aqui ---------- */
+:root {
+  --cor-fundo: #f5f3ef;
+  --cor-cartao: #fdfcfa;
+  --cor-texto: #15140f;
+  --cor-texto-suave: #67645e;
+  --cor-borda: #e2dfd8;
+  --cor-lima: #c8f56a;
+  --cor-lilas: #b8a5fa;
+  --cor-laranja: #ffa073;
+  --cor-azul: #a5d8ec;
+  --cor-escura: #15140f;          /* fundo do cartão de contato */
+  --cor-sobre-escura: #f5f3ef;    /* texto em cima do cartão de contato */
+  --fonte-titulo: "Instrument Serif", Georgia, serif;
+  --fonte-texto: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  padding-top: env(safe-area-inset-top, 0px);
+  color-scheme: light;
+}
+
+/* Modo escuro automático (quando o celular/PC está no modo escuro) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    --cor-fundo: #12110d; --cor-cartao: #1c1b16; --cor-texto: #f5f3ef; --cor-texto-suave: #a8a49c;
+    --cor-borda: #2e2c26; --cor-escura: #f5f3ef; --cor-sobre-escura: #15140f; color-scheme: dark;
+  }
+}
+/* Modo escuro escolhido pelo botão do topo */
+:root[data-tema="escuro"] {
+  --cor-fundo: #12110d; --cor-cartao: #1c1b16; --cor-texto: #f5f3ef; --cor-texto-suave: #a8a49c;
+  --cor-borda: #2e2c26; --cor-escura: #f5f3ef; --cor-sobre-escura: #15140f; color-scheme: dark;
+}
+
+/* ---------- 2. BASE: regras que valem para o site todo ---------- */
+html { scroll-behavior: smooth; scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 76px); height: 100%; }
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--cor-fundo); color: var(--cor-texto);
+  font: 400 15px/1.55 var(--fonte-texto);
+  max-width: 480px; margin: 0 auto;              /* largura de celular, centralizada */
+  padding: 0 20px calc(96px + env(safe-area-inset-bottom, 0px));  /* espaço para o menu de baixo */
+  overflow-x: hidden; -webkit-font-smoothing: antialiased;
+}
+/* Faixa que cobre a área do "notch" do celular */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--cor-fundo); z-index: 30; }
+h1, h2, h3 { font-family: var(--fonte-titulo); font-weight: 400; letter-spacing: -.025em; line-height: 1; }
+button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; text-align: inherit; }
+a { color: inherit; text-decoration: none; }
+/* Anel roxo que aparece ao navegar com o teclado (acessibilidade) */
+:focus-visible { outline: 3px solid #7a5af8; outline-offset: 2px; border-radius: 12px; }
+.link-pular { position: absolute; left: -999px; top: 8px; background: var(--cor-texto); color: var(--cor-fundo); padding: 10px 16px; border-radius: 99px; z-index: 50; }
+.link-pular:focus { left: 12px; }
+
+/* ---------- 3. TOPO: logo, foto e botão de tema ---------- */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 12px 0; background: var(--cor-fundo); }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+.logo sup { font-size: 10px; }
+.foto-perfil {
+  position: relative; flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; overflow: hidden;
+  border: 1px solid var(--cor-borda); background: linear-gradient(135deg, var(--cor-lilas), var(--cor-lima));
+  display: grid; place-items: center; font: 600 13px var(--fonte-texto); color: #15140f;
+}
+.foto-perfil img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.botao-tema { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--cor-borda); background: var(--cor-cartao); display: grid; place-items: center; }
+.botao-tema svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .4s; }
+.botao-tema .icone-sol { display: none; }                         /* lua aparece no modo claro... */
+.botao-tema[aria-pressed="true"] .icone-lua { display: none; }    /* ...e o sol no modo escuro */
+.botao-tema[aria-pressed="true"] .icone-sol { display: block; }
+
+/* ---------- 4. BOTÕES ---------- */
+.botao { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 20px; border-radius: 99px; font-weight: 500; border: 1px solid var(--cor-borda); background: var(--cor-cartao); }
+.botao-principal { background: var(--cor-texto); color: var(--cor-fundo); border-color: var(--cor-texto); }
+
+/* ---------- 5. SEÇÃO INÍCIO ---------- */
+.secao-inicio { text-align: center; padding-top: 14px; }
+.titulo-principal { font-size: clamp(42px, 13vw, 56px); }
+.titulo-principal em { display: block; }
+.texto-apresentacao { color: var(--cor-texto-suave); margin: 16px auto 22px; max-width: 32ch; }
+.botoes-inicio { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* Palco 3D: "perspective" dá a profundidade, a .cena é inclinada pelo JavaScript */
+.palco { position: relative; height: 340px; margin-top: 26px; perspective: 900px; touch-action: pan-y; }
+.cena { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+.anel { position: absolute; left: 3%; right: 3%; top: 8%; height: 70%; border: 1px solid var(--cor-borda); border-radius: 50%; transform: translateZ(-40px); }
+.esfera {
+  position: absolute; left: 50%; top: 50%; width: 200px; height: 240px; overflow: hidden;
+  border-radius: 100px 100px 18px 18px; background: linear-gradient(160deg, var(--cor-lilas) 10%, var(--cor-lima) 95%);
+  transform: translate(-50%, -50%) translateZ(10px); box-shadow: 0 30px 44px -26px rgba(90, 70, 160, .5);
+}
+.esfera svg { position: absolute; bottom: 0; left: 0; width: 100%; }
+/* Imagem personalizada do centro (colocada pelo script.js). object-position controla qual parte da foto aparece */
+.imagem-central { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+/* Brilho que acompanha o mouse (as variáveis --brilho-x/y são mudadas pelo JS) */
+.esfera::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; background: radial-gradient(circle at var(--brilho-x, 50%) var(--brilho-y, 25%), rgba(255,255,255,.6), transparent 55%); }
+
+/* Cartões que flutuam em volta da esfera */
+.cartao-flutuante {
+  position: absolute; max-width: 47%; display: flex; gap: 9px; align-items: center; text-align: left;
+  background: var(--cor-cartao); border: 1px solid var(--cor-borda); border-radius: 18px; padding: 8px 12px 8px 8px;
+  box-shadow: 0 14px 28px -14px rgba(0,0,0,.3); font-size: 12px; color: var(--cor-texto-suave); line-height: 1.25;
+  animation: flutuar 5s ease-in-out infinite;
+}
+.cartao-flutuante b { display: block; color: var(--cor-texto); font-size: 13.5px; font-weight: 600; }
+.cartao-flutuante i { flex: 0 0 auto; width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; font-style: normal; color: #15140f; }
+.flutuante-sites    { left: 0;  top: 12px;    transform: translateZ(80px) rotate(-5deg); }
+.flutuante-apps     { right: 0; top: 58px;    transform: translateZ(55px) rotate(4deg);  animation-delay: -1.2s; }
+.flutuante-sistemas { left: 0;  bottom: 62px; transform: translateZ(65px) rotate(4deg);  animation-delay: -2.4s; }
+.flutuante-design   { right: 0; bottom: 12px; transform: translateZ(90px) rotate(-5deg); animation-delay: -3.6s; }
+.flutuante-sites i { background: var(--cor-lima); }
+.flutuante-apps i { background: var(--cor-lilas); }
+.flutuante-sistemas i { background: var(--cor-laranja); }
+.flutuante-design i { background: var(--cor-azul); }
+.selo-giratorio { position: absolute; left: 2%; top: 38%; width: 76px; height: 76px; transform: translateZ(30px); color: var(--cor-texto-suave); }
+.selo-giratorio svg { width: 100%; height: 100%; fill: currentColor; animation: girar 20s linear infinite; }
+@keyframes flutuar { 50% { translate: 0 -7px; } }
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* ---------- 6. SEÇÕES EM GERAL (valem para todas as seções) ---------- */
+section { padding-top: 48px; }
+.titulo-secao { font-size: 38px; }
+.subtitulo { color: var(--cor-texto-suave); margin: 10px 0 20px; max-width: 36ch; }
+.cartao { background: var(--cor-cartao); border: 1px solid var(--cor-borda); border-radius: 24px; }
+
+/* ---------- 7. CARTÕES QUE ABREM (usados em serviços e projetos) ---------- */
+/* .cabecalho-cartao = botão que o visitante toca. .conteudo-expansivel = parte escondida */
+.cabecalho-cartao { width: 100%; display: flex; align-items: center; gap: 14px; padding: 16px; min-height: 64px; border-radius: 18px; }
+.cabecalho-cartao h3 { flex: 1; font-size: 24px; }
+.cabecalho-cartao small { display: block; font: 400 12.5px/1.3 var(--fonte-texto); color: var(--cor-texto-suave); letter-spacing: 0; margin-top: 3px; }
+.quadrado-cor { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 13px; }
+.seta { flex: 0 0 auto; width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .3s; }
+.aberto > .cabecalho-cartao .seta { transform: rotate(180deg); }
+/* Truque para animar a abertura: a linha vai de 0fr (fechada) para 1fr (aberta) */
+.conteudo-expansivel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
+.aberto > .conteudo-expansivel { grid-template-rows: 1fr; }
+.conteudo-expansivel > div { overflow: hidden; visibility: hidden; transition: visibility 0s .3s; }
+.aberto > .conteudo-expansivel > div { visibility: visible; transition: none; }
+.conteudo-expansivel p { color: var(--cor-texto-suave); padding: 0 16px 18px 70px; }
+
+/* ---------- 8. PROJETOS (grade 2 colunas x 2 linhas) ---------- */
+.grade-projetos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+.cartao-projeto { padding: 8px; border-radius: 20px; transition: filter .35s ease, opacity .35s ease; }
+.imagem-projeto { height: 96px; border-radius: 14px; position: relative; overflow: hidden; }
+.imagem-projeto::before { content: ""; position: absolute; left: 14%; right: 14%; bottom: 0; height: 62%; background: rgba(255,255,255,.7); border-radius: 14px 14px 0 0; transition: height .4s; }
+.imagem-projeto::after { content: ""; position: absolute; left: 8%; bottom: 22%; width: 34%; height: 30%; background: rgba(120,115,105,.28); border-radius: 12px; }
+.cartao-projeto:hover .imagem-projeto::before { height: 72%; }
+/* Foto do projeto: cobre a imagem inteira e esconde o desenho de exemplo */
+.imagem-projeto img { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.imagem-projeto.com-foto::before, .imagem-projeto.com-foto::after { display: none; }
+/* Botão "Ver projeto" (aparece quando o cartão está aberto) */
+.botao-ver-projeto { display: flex; align-items: center; justify-content: center; min-height: 44px; margin: 4px 4px 8px; padding: 0 14px; border-radius: 99px; background: var(--cor-texto); color: var(--cor-fundo); font-size: 13px; font-weight: 500; transition: transform .2s, opacity .2s, box-shadow .2s; }
+.botao-ver-projeto:active { transform: scale(.96); }
+@media (hover: hover) { .botao-ver-projeto:hover { opacity: .88; transform: translateY(-2px); box-shadow: 0 10px 22px -12px rgba(0,0,0,.45); } }
+.imagem-lima    { background: linear-gradient(135deg, var(--cor-lima), #e6fcbf); }
+.imagem-lilas   { background: linear-gradient(135deg, var(--cor-lilas), #e4dcff); }
+.imagem-azul    { background: linear-gradient(135deg, var(--cor-azul), #dff3fa); }
+.imagem-laranja { background: linear-gradient(135deg, var(--cor-laranja), #ffd9c6); }
+.cartao-projeto .cabecalho-cartao { padding: 10px 4px 8px; min-height: 52px; gap: 6px; }
+.cartao-projeto .cabecalho-cartao h3 { font-size: 20px; line-height: 1.05; }
+.cartao-projeto .cabecalho-cartao small { font-size: 11.5px; }
+.cartao-projeto .seta { width: 18px; height: 18px; }
+.cartao-projeto .conteudo-expansivel p { padding: 0 4px 8px; font-size: 12.5px; line-height: 1.4; }
+.etiquetas-projeto { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 4px 8px; }
+.etiquetas-projeto span { padding: 4px 9px; border: 1px solid var(--cor-borda); border-radius: 99px; font-size: 11px; }
+
+/* ---------- 9. SERVIÇOS (grade 2x2) + tecnologias ---------- */
+.grade-servicos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+.grade-servicos .cartao { position: relative; }
+.grade-servicos .cabecalho-cartao { flex-direction: column; align-items: flex-start; gap: 14px; padding: 14px; min-height: 0; }
+.grade-servicos .cabecalho-cartao h3 { flex: none; font-size: 21px; line-height: 1.05; }
+.grade-servicos .seta { position: absolute; right: 12px; top: 14px; width: 20px; height: 20px; }
+.grade-servicos .conteudo-expansivel p { padding: 0 14px 16px; font-size: 13px; line-height: 1.45; }
+/* Tecnologias: uma linha que rola para o lado */
+.lista-tecnologias { display: flex; gap: 8px; overflow-x: auto; margin: 16px -20px 0; padding: 2px 20px 4px; scrollbar-width: none; }
+.lista-tecnologias::-webkit-scrollbar { display: none; }
+.etiqueta { flex: 0 0 auto; padding: 9px 15px; border-radius: 99px; border: 1px solid var(--cor-borda); background: var(--cor-cartao); font-size: 13px; }
+
+/* ---------- 10. SOBRE ---------- */
+#sobre p { color: var(--cor-texto-suave); margin-top: 12px; }
+.numeros { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+.cartao-numero { padding: 14px 16px; border-radius: 20px; }
+.numero-valor { display: block; font: 400 34px/1 var(--fonte-titulo); letter-spacing: -.03em; }
+.cartao-numero span { font-size: 13px; color: var(--cor-texto-suave); }
+
+/* ---------- 11. DEPOIMENTOS: fotos à esquerda, comentário à direita ---------- */
+.depoimentos { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: start; }
+.lista-clientes { display: flex; flex-direction: column; gap: 8px; }
+.botao-cliente { display: flex; align-items: center; justify-content: center; padding: 8px; min-height: 64px; border: 1px solid var(--cor-borda); border-radius: 22px; background: var(--cor-cartao); }
+.botao-cliente[aria-selected="true"] { border-color: var(--cor-texto); box-shadow: 0 0 0 1px var(--cor-texto); transform: translateX(5px); }
+.avatar { flex: 0 0 auto; width: 42px; height: 42px; overflow: hidden; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; color: #15140f; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.cartao-depoimento { padding: 18px 16px; min-height: 290px; border-radius: 24px; }
+.estrelas { color: #d9622b; letter-spacing: 3px; margin-bottom: 14px; }
+.cartao-depoimento blockquote { font: 400 25px/1.12 var(--fonte-titulo); letter-spacing: -.02em; }
+.autor-depoimento { display: block; margin-top: 14px; color: var(--cor-texto-suave); font-style: normal; font-size: 12.5px; }
+.autor-depoimento strong { display: block; color: var(--cor-texto); font-weight: 600; font-size: 15px; }
+/* Animação de troca de comentário (a classe .trocando é colocada pelo JS) */
+.cartao-depoimento.trocando blockquote, .cartao-depoimento.trocando .autor-depoimento { animation: aparecer .5s ease both; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(8px); } }
+
+/* ---------- 12. CONTATO ---------- */
+.cartao-contato { position: relative; overflow: hidden; margin-top: 0; padding: 48px 22px 32px; text-align: center; border-radius: 30px; background: var(--cor-escura); color: var(--cor-sobre-escura); }
+.cartao-contato::before { content: ""; position: absolute; top: -70px; left: 50%; width: 240px; height: 150px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(150,120,220,.55), transparent); }
+.cartao-contato > * { position: relative; }
+.cartao-contato .titulo-secao { font-size: 42px; }
+.cartao-contato p { opacity: .8; margin: 14px auto 22px; max-width: 28ch; }
+.botao-email { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 54px; border-radius: 99px; background: var(--cor-sobre-escura); color: var(--cor-escura); font-weight: 500; }
+.icone-email { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.endereco-email { font-size: 13px; opacity: .7; margin-top: 10px; word-break: break-all; }
+.redes-sociais { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
+.redes-sociais a { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(128,128,128,.5); }
+.redes-sociais svg { width: 21px; height: 21px; fill: currentColor; }
+.rodape { color: var(--cor-texto-suave); font-size: 13px; text-align: center; padding: 22px 0 0; }
+
+/* ---------- 13. MENU DE NAVEGAÇÃO (pílula no rodapé do celular) ---------- */
+.menu-inferior {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+  width: calc(100% - 24px); max-width: 456px; z-index: 40; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px;
+  border-radius: 99px; border: 1px solid var(--cor-borda); box-shadow: 0 14px 30px -14px rgba(0,0,0,.35);
+  background: color-mix(in srgb, var(--cor-cartao) 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+}
+.menu-inferior a { display: flex; flex-direction: column; align-items: center; gap: 3px; min-height: 54px; padding-top: 4px; font-size: 11px; color: var(--cor-texto-suave); }
+.icone-menu { width: 46px; height: 28px; border-radius: 99px; display: grid; place-items: center; transition: background .25s, color .25s; }
+.icone-menu svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+/* Aba da seção que está na tela (o JS troca o aria-current) */
+.menu-inferior a[aria-current="true"] { color: var(--cor-texto); font-weight: 600; }
+.menu-inferior a[aria-current="true"] .icone-menu { background: var(--cor-texto); color: var(--cor-fundo); }
+
+/* ---------- 14. EFEITOS AO PASSAR O MOUSE / CLICAR (acessibilidade) ---------- */
+.botao, .botao-tema, .cartao-flutuante, .cabecalho-cartao, .botao-cliente, .botao-email, .redes-sociais a, .menu-inferior a {
+  transition: transform .2s, background-color .2s, border-color .2s, color .2s, box-shadow .2s; -webkit-tap-highlight-color: transparent; cursor: pointer;
+}
+
+.botao-email{
+   background-color: greenyellow;
+}
+
+.botao-email:hover{
+  background-color: rgb(162, 251, 27);
+  color: #015106;
+}
+/* Hover só em dispositivos com mouse (evita ficar "preso" no celular) */
+@media (hover: hover) {
+  .botao:hover { transform: translateY(-2px); box-shadow: 0 10px 22px -12px rgba(0,0,0,.45); border-color: var(--cor-texto); }
+  .botao-principal:hover { opacity: .88; }
+  .botao-tema:hover { border-color: var(--cor-texto); }
+  .botao-tema:hover svg { transform: rotate(25deg); }
+  .cartao-flutuante:hover { border-color: var(--cor-texto); box-shadow: 0 18px 32px -12px rgba(0,0,0,.45); }
+  .cabecalho-cartao:hover { background: color-mix(in srgb, var(--cor-texto) 6%, transparent); }
+  .botao-cliente:hover { border-color: var(--cor-texto); }
+  .botao-email:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgba(0,0,0,.6); }
+  .menu-inferior a:hover { color: var(--cor-texto); }
+  .menu-inferior a:not([aria-current="true"]):hover .icone-menu { background: color-mix(in srgb, var(--cor-texto) 10%, transparent); }
+}
+/* Efeito ao clicar/tocar (vale em qualquer aparelho) */
+.botao:active, .botao-email:active { transform: scale(.96); }
+.botao-tema:active { transform: scale(.9); }
+.cartao-flutuante:active { border-color: var(--cor-texto); }
+.cabecalho-cartao:active { background: color-mix(in srgb, var(--cor-texto) 12%, transparent); }
+.botao-cliente:active { transform: scale(.97); border-color: var(--cor-texto); }
+.menu-inferior a:active .icone-menu { transform: scale(.9); }
+/* Redes sociais: no hover, clique e foco o botão ganha a cor da marca (--cor-rede / --fundo-rede vêm do HTML) */
+.redes-sociais a:hover, .redes-sociais a:active, .redes-sociais a:focus-visible { background: var(--fundo-rede, var(--cor-rede)); border-color: var(--cor-rede); color: #fff; transform: translateY(-3px); }
+.redes-sociais a:focus-visible { outline: 3px solid var(--cor-rede); outline-offset: 3px; }
+/* Projetos: quando o mouse está em um card, os outros ficam levemente desfocados */
+.grade-projetos.com-desfoque .cartao-projeto:not(.em-destaque) { filter: blur(1.5px); opacity: .8; }
+
+/* ---------- 15. VERSÃO COMPUTADOR (telas a partir de 900px) ---------- */
+@media (min-width: 900px) {
+  html { scroll-padding-top: 96px; }
+  body { max-width: 1200px; padding: 0 40px 60px; font-size: 16px; }
+  .topo { padding: 16px 0; }
+  .logo { font-size: 18px; }
+  .foto-perfil { width: 44px; height: 44px; }
+  /* O menu sobe para o topo e vira uma pílula só com texto */
+  .menu-inferior { bottom: auto; top: calc(env(safe-area-inset-top, 0px) + 14px); width: auto; max-width: none; display: flex; gap: 4px; }
+  .menu-inferior a { flex-direction: row; min-height: 44px; padding: 0 20px; font-size: 14px; border-radius: 99px; }
+  .icone-menu { display: none; }
+  .menu-inferior a[aria-current="true"] { background: var(--cor-texto); color: var(--cor-fundo); }
+  .menu-inferior a:not([aria-current="true"]):hover { background: color-mix(in srgb, var(--cor-texto) 8%, transparent); }
+  section { padding-top: 110px; }
+  .secao-inicio { padding-top: 30px; }
+  .titulo-principal { font-size: clamp(72px, 8vw, 104px); }
+  .texto-apresentacao { font-size: 18px; max-width: 52ch; }
+  .botoes-inicio { grid-template-columns: auto auto; justify-content: center; gap: 12px; }
+  .botoes-inicio .botao { padding: 0 32px; }
+  .palco { height: 560px; max-width: 900px; margin: 40px auto 0; }
+  .esfera { width: 300px; height: 360px; border-radius: 150px 150px 24px 24px; }
+  .cartao-flutuante { max-width: 300px; font-size: 14px; padding: 12px 18px 12px 12px; }
+  .cartao-flutuante b { font-size: 16px; }
+  .cartao-flutuante i { width: 42px; height: 42px; border-radius: 13px; }
+  .flutuante-sites { left: 6%; top: 50px; }
+  .flutuante-apps { right: 4%; top: 110px; }
+  .flutuante-sistemas { left: 10%; bottom: 110px; }
+  .flutuante-design { right: 8%; bottom: 50px; }
+  .selo-giratorio { width: 110px; height: 110px; left: 22%; top: 42%; }
+  .titulo-secao { font-size: 60px; }
+  .subtitulo { font-size: 17px; margin: 14px 0 36px; max-width: 52ch; }
+  /* Serviços: 4 em uma linha */
+  .grade-servicos { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .grade-servicos .cabecalho-cartao { padding: 22px; }
+  .grade-servicos .cabecalho-cartao h3 { font-size: 28px; }
+  .grade-servicos .conteudo-expansivel p { padding: 0 22px 22px; font-size: 15px; }
+  /* Projetos: continuam 2x2, só que maiores */
+  .grade-projetos { gap: 20px; }
+  .cartao-projeto { padding: 14px; border-radius: 30px; }
+  .imagem-projeto { height: 260px; border-radius: 22px; }
+  .cartao-projeto .cabecalho-cartao { padding: 18px 8px 12px; }
+  .cartao-projeto .cabecalho-cartao h3 { font-size: 32px; }
+  .cartao-projeto .cabecalho-cartao small { font-size: 14px; }
+  .cartao-projeto .conteudo-expansivel p { font-size: 15px; padding: 0 8px 12px; }
+  .etiquetas-projeto { padding: 0 8px 12px; }
+  .etiquetas-projeto span { font-size: 13px; padding: 6px 12px; }
+  .botao-ver-projeto { min-height: 48px; margin: 4px 8px 12px; font-size: 15px; }
+  .lista-tecnologias { margin: 20px 0 0; padding: 2px 0; flex-wrap: wrap; }
+  /* Sobre: texto à esquerda, números à direita */
+  #sobre { display: grid; grid-template-columns: 1fr 1fr; gap: 0 80px; align-items: start; }
+  #sobre .titulo-secao, #sobre p { grid-column: 1; }
+  #sobre p { font-size: 18px; }
+  #sobre .numeros { grid-column: 2; grid-row: 1 / 4; margin-top: 0; gap: 16px; }
+  .cartao-numero { padding: 28px 26px; border-radius: 28px; }
+  .numero-valor { font-size: 60px; }
+  .cartao-numero span { font-size: 15px; }
+  /* Depoimentos */
+  .depoimentos { grid-template-columns: 96px 1fr; gap: 24px; }
+  .botao-cliente { min-height: 92px; padding: 12px; border-radius: 30px; }
+  .avatar { width: 60px; height: 60px; font-size: 16px; }
+  .cartao-depoimento { padding: 44px 48px; min-height: 400px; border-radius: 36px; }
+  .cartao-depoimento blockquote { font-size: 44px; }
+  .autor-depoimento { font-size: 16px; margin-top: 28px; }
+  .autor-depoimento strong { font-size: 20px; }
+  /* Contato */
+  .cartao-contato { padding: 110px 40px 70px; border-radius: 44px; }
+  .cartao-contato .titulo-secao { font-size: 84px; max-width: 11ch; margin: 0 auto; }
+  .cartao-contato p { font-size: 18px; max-width: 42ch; }
+  .botao-email { max-width: 320px; margin: 0 auto; }
+  .rodape { font-size: 14px; padding-top: 32px; }
+}
+
+/* ---------- 16. ACESSIBILIDADE: quem pediu "reduzir animações" no aparelho ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
